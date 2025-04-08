@@ -1,1 +1,76 @@
-hi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lecture Notes | CSE Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCSjkPG4coUOHr5F5GHRy4WtaiVQvUDFjI",
+      authDomain: "study-2899d.firebaseapp.com",
+      projectId: "study-2899d",
+      storageBucket: "study-2899d.firebasestorage.app",
+      messagingSenderId: "854936323339",
+      appId: "1:854936323339:web:e4fa01136d232c09a10e0e",
+      measurementId: "G-QCPDN6D410"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "login.html";
+      }
+    });
+
+    function logout() {
+      auth.signOut().then(() => {
+        window.location.href = "login.html";
+      });
+    }
+  </script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-blue-600">📚 Lecture Notes</h1>
+    <button onclick="logout()" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600">
+      Logout
+    </button>
+  </header>
+
+  <!-- Notes Section -->
+  <main class="p-6 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+    <!-- Example Note Cards -->
+    <a href="#" class="block bg-white rounded-xl shadow p-4 hover:bg-blue-50 transition">
+      <h2 class="font-semibold text-blue-700">Operating Systems</h2>
+      <p class="text-sm text-gray-600 mt-1">PDF notes on process, memory mgmt, scheduling.</p>
+    </a>
+
+    <a href="#" class="block bg-white rounded-xl shadow p-4 hover:bg-green-50 transition">
+      <h2 class="font-semibold text-green-700">DBMS</h2>
+      <p class="text-sm text-gray-600 mt-1">ER diagrams, Normalization, SQL basics.</p>
+    </a>
+
+    <a href="#" class="block bg-white rounded-xl shadow p-4 hover:bg-yellow-50 transition">
+      <h2 class="font-semibold text-yellow-700">Computer Networks</h2>
+      <p class="text-sm text-gray-600 mt-1">OSI model, TCP/IP, routing, etc.</p>
+    </a>
+
+    <a href="#" class="block bg-white rounded-xl shadow p-4 hover:bg-purple-50 transition">
+      <h2 class="font-semibold text-purple-700">Web Technology</h2>
+      <p class="text-sm text-gray-600 mt-1">HTML, CSS, JS, Backend basics.</p>
+    </a>
+
+  </main>
+</body>
+</html>

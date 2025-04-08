@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up | CSE Study Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCSjkPG4coUOHr5F5GHRy4WtaiVQvUDFjI",
+      authDomain: "study-2899d.firebaseapp.com",
+      projectId: "study-2899d",
+      storageBucket: "study-2899d.firebasestorage.app",
+      messagingSenderId: "854936323339",
+      appId: "1:854936323339:web:e4fa01136d232c09a10e0e",
+      measurementId: "G-QCPDN6D410"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+  </script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+  <div class="bg-white shadow-lg rounded-xl p-8 max-w-md w-full">
+    <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Create an Account</h2>
+
+    <form id="signupForm" class="space-y-4">
+      <input type="email" id="email" placeholder="Email"
+             class="w-full border border-gray-300 p-2 rounded" required />
+      <input type="password" id="password" placeholder="Password"
+             class="w-full border border-gray-300 p-2 rounded" required />
+      <button type="submit"
+              class="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition">
+        Sign Up
+      </button>
+    </form>
+
+    <p class="text-sm text-center text-gray-500 mt-4">
+      Already have an account?
+      <a href="login.html" class="text-blue-600 hover:underline">Login</a>
+    </p>
+  </div>
+
+  <script>
+    const signupForm = document.getElementById("signupForm");
+
+    signupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          alert("Account created for " + userCredential.user.email);
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          alert("Signup failed: " + error.message);
+        });
+    });
+  </script>
+
+</body>
+</html>

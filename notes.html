@@ -3,74 +3,197 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lecture Notes | CSE Portal</title>
+  <title>Notes | CSE Reg 2021</title>
   <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen py-10 px-4">
+  <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+    <h1 class="text-2xl font-bold text-blue-600 text-center mb-6">
+      📚 Notes & Question Papers - Reg 2021
+    </h1>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <form id="notesForm" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Department -->
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Select Department</label>
+          <select id="departmentSelect" class="w-full border border-gray-300 rounded p-2">
+            <option value="">-- Choose Department --</option>
+            <option value="csbs">CSBS</option>
+            <option value="cse">CSE</option>
+            <option value="it">IT</option>
+            <option value="eee">EEE</option>
+            <option value="ece">ECE</option>
+          </select>
+        </div>
+
+        <!-- Semester -->
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Select Semester</label>
+          <select id="semester" onchange="loadSubjects()" class="w-full border border-gray-300 rounded p-2">
+            <option value="">-- Choose Semester --</option>
+            <option value="sem1">Semester 1</option>
+            <option value="sem2">Semester 2</option>
+            <option value="sem3">Semester 3</option>
+            <option value="sem4">Semester 4</option>
+            <option value="sem5">Semester 5</option>
+            <option value="sem6">Semester 6</option>
+          </select>
+        </div>
+
+        <!-- Subject -->
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Select Subject</label>
+          <select id="subject" class="w-full border border-gray-300 rounded p-2">
+            <option value="">-- Choose Subject --</option>
+          </select>
+        </div>
+
+        <!-- Type -->
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Select Type</label>
+          <select id="type" class="w-full border border-gray-300 rounded p-2">
+            <option value="notes">Hint Notes</option>
+            <option value="qp">Question Papers</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="text-center pt-4">
+        <button type="button" onclick="showResources()"
+          class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+          Show Resources
+        </button>
+      </div>
+    </form>
+
+    <!-- Output -->
+    <div id="resultBox" class="mt-8 hidden">
+      <h2 class="text-xl font-semibold mb-4 text-gray-700">📥 Download Links:</h2>
+      <ul id="resultsList" class="list-disc list-inside text-blue-600 space-y-2"></ul>
+    </div>
+  </div>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCSjkPG4coUOHr5F5GHRy4WtaiVQvUDFjI",
-      authDomain: "study-2899d.firebaseapp.com",
-      projectId: "study-2899d",
-      storageBucket: "study-2899d.firebasestorage.app",
-      messagingSenderId: "854936323339",
-      appId: "1:854936323339:web:e4fa01136d232c09a10e0e",
-      measurementId: "G-QCPDN6D410"
+    const subjectsBySemester = {
+      sem1: ["Problem Solving", "Engineering Physics", "Mathematics I"],
+      sem2: ["Python Programming", "Engineering Graphics", "Environmental Science"],
+      sem3: ["Data Structures", "Digital Principles", "OOP in Java", "Mathematics III"],
+      sem4: ["Operating Systems", "Database Management Systems", "Computer Networks", "Python Lab"],
+      sem5: ["Theory of Computation", "Software Engineering", "Artificial Intelligence"],
+      sem6: ["Web Technology", "Cloud Computing", "Cyber Security", "Compiler Design"]
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    const resources = {
+  // ----------------- CSE -----------------
+  "cse-sem1-Problem Solving-notes": ["CSE_PS_Notes.pdf"],
+  "cse-sem1-Problem Solving-qp": ["CSE_PS_QP.pdf"],
+  "cse-sem2-Python Programming-notes": ["CSE_Python_Notes.pdf"],
+  "cse-sem2-Python Programming-qp": ["CSE_Python_QP.pdf"],
+  "cse-sem3-Data Structures-notes": ["CSE_DS_Notes.pdf"],
+  "cse-sem3-Data Structures-qp": ["CSE_DS_QP.pdf"],
+  "cse-sem4-Operating Systems-notes": ["CSE_OS_Notes.pdf"],
+  "cse-sem4-Operating Systems-qp": ["CSE_OS_QP.pdf"],
+  "cse-sem5-Theory of Computation-notes": ["CSE_TOC_Notes.pdf"],
+  "cse-sem5-Theory of Computation-qp": ["CSE_TOC_QP.pdf"],
+  "cse-sem6-Web Technology-notes": ["CSE_WT_Notes.pdf"],
+  "cse-sem6-Web Technology-qp": ["CSE_WT_QP.pdf"],
 
-    auth.onAuthStateChanged((user) => {
-      if (!user) {
-        window.location.href = "login.html";
+  // ----------------- IT -----------------
+  "it-sem1-Problem Solving-notes": ["IT_PS_Notes.pdf"],
+  "it-sem1-Problem Solving-qp": ["IT_PS_QP.pdf"],
+  "it-sem2-Python Programming-notes": ["IT_Python_Notes.pdf"],
+  "it-sem2-Python Programming-qp": ["IT_Python_QP.pdf"],
+  "it-sem3-Data Structures-notes": ["IT_DS_Notes.pdf"],
+  "it-sem3-Data Structures-qp": ["IT_DS_QP.pdf"],
+  "it-sem4-Operating Systems-notes": ["IT_OS_Notes.pdf"],
+  "it-sem4-Operating Systems-qp": ["IT_OS_QP.pdf"],
+  "it-sem5-Theory of Computation-notes": ["IT_TOC_Notes.pdf"],
+  "it-sem5-Theory of Computation-qp": ["IT_TOC_QP.pdf"],
+  "it-sem6-Web Technology-notes": ["IT_WT_Notes.pdf"],
+  "it-sem6-Web Technology-qp": ["IT_WT_QP.pdf"],
+
+  // ----------------- EEE -----------------
+  "eee-sem1-Problem Solving-notes": ["EEE_PS_Notes.pdf"],
+  "eee-sem1-Problem Solving-qp": ["EEE_PS_QP.pdf"],
+  "eee-sem2-Python Programming-notes": ["EEE_Python_Notes.pdf"],
+  "eee-sem2-Python Programming-qp": ["EEE_Python_QP.pdf"],
+  "eee-sem3-Data Structures-notes": ["EEE_DS_Notes.pdf"],
+  "eee-sem3-Data Structures-qp": ["EEE_DS_QP.pdf"],
+  "eee-sem4-Operating Systems-notes": ["EEE_OS_Notes.pdf"],
+  "eee-sem4-Operating Systems-qp": ["EEE_OS_QP.pdf"],
+  "eee-sem5-Theory of Computation-notes": ["EEE_TOC_Notes.pdf"],
+  "eee-sem5-Theory of Computation-qp": ["EEE_TOC_QP.pdf"],
+  "eee-sem6-Web Technology-notes": ["EEE_WT_Notes.pdf"],
+  "eee-sem6-Web Technology-qp": ["EEE_WT_QP.pdf"],
+
+  // ----------------- ECE -----------------
+  "ece-sem1-Problem Solving-notes": ["ECE_PS_Notes.pdf"],
+  "ece-sem1-Problem Solving-qp": ["ECE_PS_QP.pdf"],
+  "ece-sem2-Python Programming-notes": ["ECE_Python_Notes.pdf"],
+  "ece-sem2-Python Programming-qp": ["ECE_Python_QP.pdf"],
+  "ece-sem3-Data Structures-notes": ["ECE_DS_Notes.pdf"],
+  "ece-sem3-Data Structures-qp": ["ECE_DS_QP.pdf"],
+  "ece-sem4-Operating Systems-notes": ["ECE_OS_Notes.pdf"],
+  "ece-sem4-Operating Systems-qp": ["ECE_OS_QP.pdf"],
+  "ece-sem5-Theory of Computation-notes": ["ECE_TOC_Notes.pdf"],
+  "ece-sem5-Theory of Computation-qp": ["ECE_TOC_QP.pdf"],
+  "ece-sem6-Web Technology-notes": ["ECE_WT_Notes.pdf"],
+  "ece-sem6-Web Technology-qp": ["ECE_WT_QP.pdf"],
+
+  // ----------------- CSBS -----------------
+  "csbs-sem1-Problem Solving-notes": ["CSBS_PS_Notes.pdf"],
+  "csbs-sem1-Problem Solving-qp": ["CSBS_PS_QP.pdf"],
+  "csbs-sem2-Python Programming-notes": ["CSBS_Python_Notes.pdf"],
+  "csbs-sem2-Python Programming-qp": ["CSBS_Python_QP.pdf"],
+  "csbs-sem3-Data Structures-notes": ["CSBS_DS_Notes.pdf"],
+  "csbs-sem3-Data Structures-qp": ["CSBS_DS_QP.pdf"],
+  "csbs-sem4-Operating Systems-notes": ["CSBS_OS_Notes.pdf"],
+  "csbs-sem4-Operating Systems-qp": ["CSBS_OS_QP.pdf"],
+  "csbs-sem5-Theory of Computation-notes": ["CSBS_TOC_Notes.pdf"],
+  "csbs-sem5-Theory of Computation-qp": ["CSBS_TOC_QP.pdf"],
+  "csbs-sem6-Web Technology-notes": ["CSBS_WT_Notes.pdf"],
+  "csbs-sem6-Web Technology-qp": ["CSBS_WT_QP.pdf"]
+};
+
+    function loadSubjects() {
+      const semester = document.getElementById("semester").value;
+      const subjectDropdown = document.getElementById("subject");
+      subjectDropdown.innerHTML = `<option value="">-- Choose Subject --</option>`;
+      
+      if (semester && subjectsBySemester[semester]) {
+        subjectsBySemester[semester].forEach(sub => {
+          const option = document.createElement("option");
+          option.value = sub;
+          option.text = sub;
+          subjectDropdown.appendChild(option);
+        });
       }
-    });
+    }
 
-    function logout() {
-      auth.signOut().then(() => {
-        window.location.href = "login.html";
-      });
+    function showResources() {
+      const department = document.getElementById("departmentSelect").value;
+      const sem = document.getElementById("semester").value;
+      const subject = document.getElementById("subject").value;
+      const type = document.getElementById("type").value;
+      const key = `${department}-${sem}-${subject}-${type}`;
+      const resultBox = document.getElementById("resultBox");
+      const resultsList = document.getElementById("resultsList");
+
+      resultsList.innerHTML = "";
+
+      if (resources[key]) {
+        resources[key].forEach(file => {
+          const li = document.createElement("li");
+          li.innerHTML = `<a href="files/${file}" target="_blank" class="hover:underline">${file}</a>`;
+          resultsList.appendChild(li);
+        });
+        resultBox.classList.remove("hidden");
+      } else {
+        resultsList.innerHTML = `<li class="text-red-600">No files available yet for this selection.</li>`;
+        resultBox.classList.remove("hidden");
+      }
     }
   </script>
-</head>
-<body class="bg-gray-100 min-h-screen">
-
-  <!-- Header -->
-  <header class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold text-blue-600">📚 Lecture Notes</h1>
-    <button onclick="logout()" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600">
-      Logout
-    </button>
-  </header>
-
-  <!-- Notes Section -->
-  <main class="p-6 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-    <!-- Example Note Cards -->
-    <a href="#" class="block bg-white rounded-xl shadow p-4 hover:bg-blue-50 transition">
-      <h2 class="font-semibold text-blue-700">Operating Systems</h2>
-      <p class="text-sm text-gray-600 mt-1">PDF notes on process, memory mgmt, scheduling.</p>
-    </a>
-
-    <a href="#" class="block bg-white rounded-xl shadow p-4 hover:bg-green-50 transition">
-      <h2 class="font-semibold text-green-700">DBMS</h2>
-      <p class="text-sm text-gray-600 mt-1">ER diagrams, Normalization, SQL basics.</p>
-    </a>
-
-    <a href="#" class="block bg-white rounded-xl shadow p-4 hover:bg-yellow-50 transition">
-      <h2 class="font-semibold text-yellow-700">Computer Networks</h2>
-      <p class="text-sm text-gray-600 mt-1">OSI model, TCP/IP, routing, etc.</p>
-    </a>
-
-    <a href="#" class="block bg-white rounded-xl shadow p-4 hover:bg-purple-50 transition">
-      <h2 class="font-semibold text-purple-700">Web Technology</h2>
-      <p class="text-sm text-gray-600 mt-1">HTML, CSS, JS, Backend basics.</p>
-    </a>
-
-  </main>
 </body>
 </html>

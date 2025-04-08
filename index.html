@@ -144,8 +144,46 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-white/80 backdrop-blur text-center text-sm text-gray-600 p-4 mt-10 shadow-t">
-    Made with ❤️ by Team CSE • © 2025 Study Portal
-  </footer>
+    <footer class="mt-12 bg-blue-50 text-center text-sm text-gray-700 py-6 shadow-inner">
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-2">
+        <a href="mailto:team@cseportal.com" class="hover:text-blue-600 transition">📧 team@cseportal.com</a>
+        <span class="hidden sm:block">•</span>
+        <a href="https://github.com/mrsan-cah" target="_blank" class="hover:text-blue-600 transition">💻 GitHub</a>
+        <span class="hidden sm:block">•</span>
+        <a href="https://instagram.com/" target="_blank" class="hover:text-blue-600 transition">📸 Instagram</a>
+      </div>
+      <p class="text-gray-500">© 2025 CSE Study Portal. Made with ❤️ by Team CSE.</p>
+    </footer>
+    <form action="https://formsubmit.co/senthamizhaselvi@gmail.com" method="POST"
+    class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left bg-white shadow-lg rounded-xl p-6">
+
+<!-- HIDDEN SETTINGS -->
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_subject" value="New Contact from CSE Portal">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_next" value="https://yourwebsite.com/thankyou.html">
+
+<div>
+  <label class="block text-sm font-medium text-gray-700">Your Name</label>
+  <input type="text" name="name" required placeholder="John Doe"
+         class="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+</div>
+<div>
+  <label class="block text-sm font-medium text-gray-700">Email</label>
+  <input type="email" name="email" required placeholder="you@example.com"
+         class="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+</div>
+<div class="sm:col-span-2">
+  <label class="block text-sm font-medium text-gray-700">Message</label>
+  <textarea name="message" required rows="4" placeholder="Your message..."
+            class="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+</div>
+<div class="sm:col-span-2 text-right">
+  <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+    Send Message
+  </button>
+</div>
+</form>
+
 </body>
 </html>

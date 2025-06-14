@@ -3,188 +3,168 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard | CSE Study Portal</title>
+  <title>CSE Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            primary: '#2563eb',
+          animation: {
+            float: "float 3s ease-in-out infinite",
           },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' }
+            }
+          }
         }
       }
     }
   </script>
+</head>
+<body class="bg-gradient-to-br from-gray-100 to-white text-gray-800">
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <!-- Navbar -->
+  <header class="bg-blue-900 text-white sticky top-0 shadow-lg z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold">🚀 CSE Portal</h1>
 
+      <!-- Desktop Menu -->
+      <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+        <a href="#" class="hover:text-yellow-300 transition">Home</a>
+        <a href="notes.html" class="hover:text-yellow-300 transition">Notes</a>
+        <a href="video.html" class="hover:text-yellow-300 transition">Videos</a>
+        <span id="userEmail" class="text-sm text-gray-300 bg-gray-800 px-3 py-1 rounded-lg"></span>
+        <button onclick="logout()" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-white text-sm ml-2">Logout</button>
+      </nav>
+
+      <!-- Hamburger -->
+      <button class="md:hidden" onclick="toggleMenu()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+             viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-blue-800 px-6 pb-4 space-y-2 text-sm">
+      <a href="#" class="block text-white hover:text-yellow-300">Home</a>
+      <a href="notes.html" class="block text-white hover:text-yellow-300">Notes</a>
+      <a href="video.html" class="block text-white hover:text-yellow-300">Videos</a>
+      <span id="userEmailMobile" class="block text-xs text-gray-200 mt-2"></span>
+      <button onclick="logout()" class="mt-2 bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-white text-sm">Logout</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="text-center py-20 bg-gradient-to-tr from-blue-700 to-blue-900 text-white px-4">
+    <h2 class="text-4xl md:text-5xl font-extrabold mb-4 animate-float">Welcome to the CSE Portal</h2>
+    <p class="text-lg max-w-xl mx-auto">Find helpful notes, curated videos, and stay ahead in your studies.</p>
+  </section>
+
+  <!-- Notes Section -->
+  <section id="notes" class="py-16 max-w-6xl mx-auto px-4">
+    <h3 class="text-3xl font-bold text-blue-800 text-center mb-10">📘 Sample Notes</h3>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition">
+        <div class="text-blue-600 text-4xl mb-2">📄</div>
+        <h4 class="text-lg font-semibold mb-2">Data Structures</h4>
+        <p class="text-gray-600 text-sm mb-4">Concepts, diagrams, and solved examples.</p>
+        <a href="data structures.pdf" class="text-blue-500 hover:underline font-medium">Download PDF</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition">
+        <div class="text-blue-600 text-4xl mb-2">📘</div>
+        <h4 class="text-lg font-semibold mb-2">DBMS</h4>
+        <p class="text-gray-600 text-sm mb-4">ER models, normalization and queries.</p>
+        <a href="dbms.pdf" class="text-blue-500 hover:underline font-medium">Download PDF</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition">
+        <div class="text-blue-600 text-4xl mb-2">📐</div>
+        <h4 class="text-lg font-semibold mb-2">Maths</h4>
+        <p class="text-gray-600 text-sm mb-4">Logic, sets, graphs and functions.</p>
+        <a href="#" class="text-blue-500 hover:underline font-medium">Download PDF</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Videos Section -->
+  <section id="videos" class="py-16 bg-gray-100 px-4">
+    <h3 class="text-3xl font-bold text-center text-blue-800 mb-10">🎥 Sample Videos</h3>
+    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <div class="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition">
+        <iframe class="w-full h-64" src="https://www.youtube.com/embed/zOjov-2OZ0E" frameborder="0" allowfullscreen></iframe>
+        <div class="absolute bottom-0 bg-gradient-to-t from-black/80 to-transparent text-white w-full p-4 text-sm font-semibold">Intro to Algorithms</div>
+      </div>
+      <div class="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition">
+        <iframe class="w-full h-64" src="https://www.youtube.com/embed/HXV3zeQKqGY" frameborder="0" allowfullscreen></iframe>
+        <div class="absolute bottom-0 bg-gradient-to-t from-black/80 to-transparent text-white w-full p-4 text-sm font-semibold">ER Diagram Explanation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Connect Section -->
+  <section id="connect" class="py-16 px-6 bg-gradient-to-br from-white to-gray-100">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <!-- Left: Connect Info -->
+      <div>
+        <h3 class="text-3xl font-bold text-blue-800 mb-4">🤝 Let's Connect</h3>
+        <p class="text-gray-600 mb-6">Have questions or feedback? Connect with us directly or drop a message via WhatsApp!</p>
+        <a href="https://wa.me/919361663265" target="_blank" class="inline-block bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition">
+          💬 Chat on WhatsApp
+        </a>
+      </div>
+
+      <!-- Right: Feedback Form -->
+      <div class="bg-white p-6 rounded-xl shadow-lg border border-blue-100">
+        <h4 class="text-xl font-semibold mb-4 text-blue-700">📢 Share Your Feedback</h4>
+        <form>
+          <input type="text" placeholder="Your Name" class="w-full border rounded px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input type="email" placeholder="Your Email" class="w-full border rounded px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <textarea placeholder="Your Message..." rows="4" class="w-full border rounded px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-blue-900 text-white py-8">
+    <div class="text-center text-sm">
+      &copy; 2025 CSE Portal. Built with ❤️ for learners.
+    </div>
+  </footer>
+
+  <!-- Firebase & JS -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCSjkPG4coUOHr5F5GHRy4WtaiVQvUDFjI",
-      authDomain: "study-2899d.firebaseapp.com",
+    // Firebase config
+    firebase.initializeApp({
+      apiKey: "AIzaSyCSjkPG4coUOHr5F5GHRy4WtaiVQvUDFjI", 
+      authDomain: "study-2899d.firebaseapp.com", 
       projectId: "study-2899d",
-      storageBucket: "study-2899d.firebasestorage.app",
-      messagingSenderId: "854936323339",
-      appId: "1:854936323339:web:e4fa01136d232c09a10e0e",
-      measurementId: "G-QCPDN6D410"
-    };
+    });
 
-    firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
     auth.onAuthStateChanged((user) => {
-      if (!user) {
-        window.location.href = "login.html";
-      } else {
+      if (!user) window.location.href = "login.html";
+      else {
         document.getElementById("userEmail").textContent = user.email;
+        document.getElementById("userEmailMobile").textContent = user.email;
       }
     });
 
     function logout() {
-      auth.signOut().then(() => {
-        window.location.href = "login.html";
-      });
+      auth.signOut().then(() => window.location.href = "login.html");
     }
 
-    function toggleMobileMenu() {
-      document.getElementById("mobile-menu").classList.toggle("hidden");
+    function toggleMenu() {
+      document.getElementById("mobileMenu").classList.toggle("hidden");
     }
   </script>
-</head>
-<body class="bg-gradient-to-br from-blue-50 to-white min-h-screen flex flex-col justify-between">
-
-  <!-- Header -->
-  <header class="bg-white/70 backdrop-blur-md shadow px-4 py-3 flex justify-between items-center sticky top-0 z-10">
-    <h1 class="text-2xl font-bold text-blue-600">🚀 CSE Portal</h1>
-
-    <!-- Desktop Nav -->
-    <div class="hidden md:flex items-center gap-6">
-      <a href="index.html" class="text-sm text-gray-700 hover:text-blue-600">Home</a>
-      <a href="mcq.html" class="text-sm text-gray-700 hover:text-blue-600">MCQs</a>
-      <a href="notes.html" class="text-sm text-gray-700 hover:text-blue-600">Notes</a>
-      <a href="important.html" class="text-sm text-gray-700 hover:text-blue-600">Important Qs</a>
-      <a href="forum.html" class="text-sm text-gray-700 hover:text-blue-600">Forum</a>
-      <span id="userEmail" class="text-sm text-gray-600"></span>
-      <button onclick="logout()" class="bg-red-500 text-white px-4 py-1 rounded-full text-sm hover:bg-red-600">
-        Logout
-      </button>
-    </div>
-
-    <!-- Mobile hamburger -->
-    <div class="md:hidden">
-      <button onclick="toggleMobileMenu()">
-        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
-             viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-      </button>
-    </div>
-  </header>
-
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden md:hidden bg-white shadow px-4 py-3">
-    <ul class="flex flex-col space-y-3">
-      <li><a href="index.html" class="text-gray-700 hover:text-blue-600">Home</a></li>
-      <li><a href="mcq.html" class="text-gray-700 hover:text-blue-600">MCQs</a></li>
-      <li><a href="notes.html" class="text-gray-700 hover:text-blue-600">Notes</a></li>
-      <li><a href="important.html" class="text-gray-700 hover:text-blue-600">Important Qs</a></li>
-      <li><a href="forum.html" class="text-gray-700 hover:text-blue-600">Forum</a></li>
-      <li><button onclick="logout()" class="text-red-600 font-medium">Logout</button></li>
-    </ul>
-  </div>
-
-  <!-- Dashboard Grid -->
-  <main class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-5xl mx-auto mt-6 w-full">
-
-    <!-- Stylish Cards -->
-    <a href="notes.html" class="rounded-2xl p-6 shadow-xl bg-white/80 backdrop-blur hover:scale-105 hover:bg-blue-100 transition duration-300">
-      <div class="flex items-center space-x-4">
-        <span class="text-3xl">📘</span>
-        <div>
-          <h2 class="text-lg font-semibold text-blue-700">Lecture Notes</h2>
-          <p class="text-sm text-gray-600">Download subject-wise PDFs</p>
-        </div>
-      </div>
-    </a>
-
-    <a href="mcq.html" class="rounded-2xl p-6 shadow-xl bg-white/80 backdrop-blur hover:scale-105 hover:bg-green-100 transition duration-300">
-      <div class="flex items-center space-x-4">
-        <span class="text-3xl">❓</span>
-        <div>
-          <h2 class="text-lg font-semibold text-green-700">MCQ Practice</h2>
-          <p class="text-sm text-gray-600">Test your knowledge!</p>
-        </div>
-      </div>
-    </a>
-
-    <a href="important.html" class="rounded-2xl p-6 shadow-xl bg-white/80 backdrop-blur hover:scale-105 hover:bg-yellow-100 transition duration-300">
-      <div class="flex items-center space-x-4">
-        <span class="text-3xl">📝</span>
-        <div>
-          <h2 class="text-lg font-semibold text-yellow-700">Important Qs</h2>
-          <p class="text-sm text-gray-600">Frequently asked questions</p>
-        </div>
-      </div>
-    </a>
-
-    <a href="forum.html" class="rounded-2xl p-6 shadow-xl bg-white/80 backdrop-blur hover:scale-105 hover:bg-purple-100 transition duration-300">
-      <div class="flex items-center space-x-4">
-        <span class="text-3xl">💬</span>
-        <div>
-          <h2 class="text-lg font-semibold text-purple-700">Forum</h2>
-          <p class="text-sm text-gray-600">Ask & answer doubts</p>
-        </div>
-      </div>
-    </a>
-  </main>
-
-  <!-- Footer -->
-    <footer class="mt-12 bg-blue-50 text-center text-sm text-gray-700 py-6 shadow-inner">
-      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-2">
-        <a href="mailto:team@cseportal.com" class="hover:text-blue-600 transition">📧 team@cseportal.com</a>
-        <span class="hidden sm:block">•</span>
-        <a href="https://github.com/mrsan-cah" target="_blank" class="hover:text-blue-600 transition">💻 GitHub</a>
-        <span class="hidden sm:block">•</span>
-        <a href="https://instagram.com/" target="_blank" class="hover:text-blue-600 transition">📸 Instagram</a>
-      </div>
-      <p class="text-gray-500">© 2025 CSE Study Portal. Made with ❤️ by Team CSE.</p>
-    </footer>
-    <form action="https://formsubmit.co/senthamizhaselvi@gmail.com" method="POST"
-    class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left bg-white shadow-lg rounded-xl p-6">
-
-<!-- HIDDEN SETTINGS -->
-<input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="https://yourwebsite.com/thankyou.html"_subject" value="New Contact from CSE Portal">
-<input type="hidden" name="_template" value="table">
-<input type="hidden" name="_next" value="https://mrsan-cah.github.io/cse/thankyou.html">
-
-
-<div>
-  <label class="block text-sm font-medium text-gray-700">Your Name</label>
-  <input type="text" name="name" required placeholder="John Doe"
-         class="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
-</div>
-<div>
-  <label class="block text-sm font-medium text-gray-700">Email</label>
-  <input type="email" name="email" required placeholder="you@example.com"
-         class="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
-</div>
-<div class="sm:col-span-2">
-  <label class="block text-sm font-medium text-gray-700">Message</label>
-  <textarea name="message" required rows="4" placeholder="Your message..."
-            class="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
-</div>
-<div class="sm:col-span-2 text-right">
-  <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-    Send Message
-  </button>
-</div>
-</form>
-
 </body>
 </html>
